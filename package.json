@@ -2,16 +2,18 @@
   "name": "digital-chain",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",  
+  "main": "index.js",
   "scripts": {
     "test": "mocha -R spec"
   },
   "dependencies": {},
-    
-   
-    "author": "Yaniv Kessler", 
-  
-  
+  "keywords": [
+    "linkedlist",
+    "data structures",
+    "linked-list",
+    "list"
+  ],
+  "author": "Yaniv Kessler",
   "bugs": {
     "url": "https://github.com/kessler/digital-chain/issues"
   },
@@ -20,6 +22,9 @@
     "url": "https://github.com/kessler/digital-chain"
   },
   "homepage": "https://github.com/kessler/digital-chain",
-    
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.5"
+  }
 }
