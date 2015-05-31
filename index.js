@@ -65,7 +65,7 @@ LinkedList.prototype.foreach = LinkedList.prototype.forEach = function(fn) {
 	}
 }
 
-LinkedList.prototype.iterator = function() {
+LinkedList.prototype.nodeIterator = function() {
 	var next = this.head
 
 	return function() {
@@ -78,7 +78,7 @@ LinkedList.prototype.iterator = function() {
 	}
 }
 
-LinkedList.prototype.dataIterator = function() {
+LinkedList.prototype.iterator = function() {
 	var next = this.head
 
 	return function() {
@@ -186,7 +186,7 @@ LinkedList.prototype.remove = function(node) {
 	node.prev = undefined
 	node.next = undefined
 
-	return node
+	return node.data
 }
 
 LinkedList.prototype.shift = function() {

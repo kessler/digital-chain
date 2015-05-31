@@ -208,7 +208,7 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			var nPop = topic.pop()
 
 			expect(topic.length).to.equal(0)
-			expect(nPop).to.equal(n1)
+			expect(nPop).to.equal(n1.data)
 			expect(topic.head).to.be.undefined
 			expect(topic.tail).to.be.undefined
 		})
@@ -221,14 +221,14 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			var nPop = topic.pop()
 
 			expect(topic.length).to.equal(2)
-			expect(nPop).to.equal(n3)
+			expect(nPop).to.equal(n3.data)
 			expect(topic.head).to.equal(n1)
 			expect(topic.tail).to.equal(n2)
 
 			nPop = topic.pop()
 
 			expect(topic.length).to.equal(1)
-			expect(nPop).to.equal(n2)
+			expect(nPop).to.equal(n2.data)
 			expect(topic.head).to.equal(n1)
 			expect(topic.tail).to.equal(n1)
 		})
@@ -241,7 +241,7 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			var node = topic.shift()
 
 			expect(topic.length).to.equal(0)
-			expect(node).to.equal(n1)
+			expect(node).to.equal(n1.data)
 			expect(topic.head).to.be.undefined
 			expect(topic.tail).to.be.undefined
 		})
@@ -254,14 +254,14 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			var node = topic.shift()
 
 			expect(topic.length).to.equal(2)
-			expect(node).to.equal(n1)
+			expect(node).to.equal(n1.data)
 			expect(topic.head).to.equal(n2)
 			expect(topic.tail).to.equal(n3)
 
 			node = topic.shift()
 
 			expect(topic.length).to.equal(1)
-			expect(node).to.equal(n2)
+			expect(node).to.equal(n2.data)
 			expect(topic.head).to.equal(n3)
 			expect(topic.tail).to.equal(n3)
 		})
@@ -295,7 +295,7 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(count).to.equal(1)
 		})
 
-		it('iterator', function () {
+		it('nodeIterator', function () {
 			var nodes = []
 			
 			nodes.push(topic.push(1))
@@ -304,24 +304,24 @@ describe('Digital Chain - A linked list implementation, ', function () {
 
 			expect(nodes.length).to.equal(3)
 
-			var iterator = topic.iterator()
+			var nodeIterator = topic.nodeIterator()
 			
 			var current
 			var count = 0
 			
-			while (current = iterator()) {
+			while (current = nodeIterator()) {
 				expect(current).to.equal(nodes[count++])
 			}
 			
 			expect(count).to.equal(nodes.length)
 		})
 
-		it('data iterator', function () {
+		it('iterator', function () {
 			var data = ['a', 'b', 'c']
 
 			topic.pushAll(data)
 			
-			var iterator = topic.dataIterator()
+			var iterator = topic.iterator()
 			
 			var current
 			var count = 0
