@@ -1,12 +1,12 @@
-var LinkedList = require('./index')
-var expect = require('chai').expect
+const LinkedList = require('./index')
+const { expect } = require('chai')
 
-describe('Digital Chain - A linked list implementation, ', function () {
-	var topic
+describe('Digital Chain - A linked list implementation, ', () => {
+	let topic
 
-	describe('push', function () {
-		it('an item', function() {
-			var node = topic.push(1)
+	describe('push', () => {
+		it('an item', () => {
+			let node = topic.push(1)
 			expect(node.data).to.equal(1)
 			expect(topic.length).to.equal(1)
 			expect(topic.head).to.equal(node)
@@ -15,9 +15,9 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(topic.head.data).to.equal(1)
 		})
 
-		it('two items', function() {
-			var n1 = topic.push(1)
-			var n2 = topic.push(2)
+		it('two items', () => {
+			let n1 = topic.push(1)
+			let n2 = topic.push(2)
 
 			expect(topic.length).to.equal(2)
 
@@ -30,10 +30,10 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(topic.tail).not.to.equal(topic.head)
 		})
 
-		it('many items', function() {
-			var n1 = topic.push(1)
-			var n2 = topic.push(2)
-			var n3 = topic.push(3)
+		it('many items', () => {
+			let n1 = topic.push(1)
+			let n2 = topic.push(2)
+			let n3 = topic.push(3)
 
 			expect(topic.length).to.equal(3)
 
@@ -51,7 +51,7 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(topic.tail).not.to.equal(topic.head)
 		})
 
-		it('an array of items', function () {
+		it('an array of items', () => {
 			topic.pushAll([1, 2, 3])
 			topic.pushAll([4, 5, 6])
 
@@ -64,12 +64,12 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(topic.tail.data).to.equal(6)
 		})
 	})
-	
+
 	// TODO: want to have the same methods like javascript array
 	// but the english sounds quirky
-	describe('unshift (insert at head)', function () {
-		it('an item', function() {	
-			var node = topic.unshift(1)
+	describe('unshift (insert at head)', () => {
+		it('an item', () => {
+			let node = topic.unshift(1)
 			expect(topic.length).to.equal(1)
 			expect(topic.head).to.equal(node)
 			expect(topic.tail).to.equal(node)
@@ -77,9 +77,9 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(topic.head.data).to.equal(1)
 		})
 
-		it('two items', function() {
-			var n1 = topic.unshift(1)
-			var n2 = topic.unshift(2)
+		it('two items', () => {
+			let n1 = topic.unshift(1)
+			let n2 = topic.unshift(2)
 
 			expect(topic.length).to.equal(2)
 
@@ -92,10 +92,10 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(topic.tail).not.to.equal(topic.head)
 		})
 
-		it('many items', function() {
-			var n1 = topic.unshift(1)
-			var n2 = topic.unshift(2)
-			var n3 = topic.unshift(3)
+		it('many items', () => {
+			let n1 = topic.unshift(1)
+			let n2 = topic.unshift(2)
+			let n3 = topic.unshift(3)
 
 			expect(topic.length).to.equal(3)
 
@@ -113,7 +113,7 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(topic.tail).not.to.equal(topic.head)
 		})
 
-		it('an array of items', function () {
+		it('an array of items', () => {
 			topic.unshiftAll([1, 2, 3])
 			topic.unshiftAll([4, 5, 6])
 
@@ -127,25 +127,25 @@ describe('Digital Chain - A linked list implementation, ', function () {
 		})
 	})
 
-	describe('remove', function () {
-		it('head when there is only one node', function () {
-			var n1 = topic.push(1)
-			
+	describe('remove', () => {
+		it('head when there is only one node', () => {
+			let n1 = topic.push(1)
+
 			topic.remove(n1)
 
 			expect(topic.head).to.be.undefined
 			expect(topic.length).to.equal(0)
 		})
 
-		it('can only be used with node objects', function() {
-			expect(function () {
+		it('can only be used with node objects', () => {
+			expect(() => {
 				topic.remove(1)
 			}).to.throw(TypeError)
 		})
 
-		it('head where there are two nodes', function() {
-			var n1 = topic.push(1)
-			var n2 = topic.push(2)
+		it('head where there are two nodes', () => {
+			let n1 = topic.push(1)
+			let n2 = topic.push(2)
 
 			topic.remove(n1)
 
@@ -154,9 +154,9 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(topic.length).to.equal(1)
 		})
 
-		it('tail where there are two nodes', function() {
-			var n1 = topic.push(1)
-			var n2 = topic.push(2)
+		it('tail where there are two nodes', () => {
+			let n1 = topic.push(1)
+			let n2 = topic.push(2)
 
 			topic.remove(n2)
 
@@ -165,28 +165,28 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(topic.length).to.equal(1)
 		})
 
-		it('a node where there are many nodes', function() {
-			var n1 = topic.push(1)
-			var n2 = topic.push(2)
-			var n3 = topic.push(3)
+		it('a node where there are many nodes', () => {
+			let n1 = topic.push(1)
+			let n2 = topic.push(2)
+			let n3 = topic.push(3)
 
 			topic.remove(n2)
-			
+
 			expect(topic.head).to.equal(n1)
 			expect(topic.tail).to.equal(n3)
-			
+
 			expect(topic.tail).to.equal(topic.head.next)
 			expect(topic.head).to.equal(topic.tail.prev)
 
 			expect(topic.length).to.equal(2)
 		})
 
-		it('all nodes when there are many nodes', function () {
-			for (var i = 0; i < 10; i++) {				
+		it('all nodes when there are many nodes', () => {
+			for (let i = 0; i < 10; i++) {
 				topic.push(i)
 			}
 
-			var removeCount = 10
+			let removeCount = 10
 			while (topic.head) {
 				topic.remove(topic.head)
 				removeCount--
@@ -200,12 +200,12 @@ describe('Digital Chain - A linked list implementation, ', function () {
 
 	})
 
-	
-	describe('pop', function () {
-		it('from a list with one node', function () {
-			var n1 = topic.push(1)
 
-			var nPop = topic.pop()
+	describe('pop', () => {
+		it('from a list with one node', () => {
+			let n1 = topic.push(1)
+
+			let nPop = topic.pop()
 
 			expect(topic.length).to.equal(0)
 			expect(nPop).to.equal(n1.data)
@@ -213,12 +213,12 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(topic.tail).to.be.undefined
 		})
 
-		it('from a list with many nodes', function () {
-			var n1 = topic.push(1)
-			var n2 = topic.push(2)
-			var n3 = topic.push(3)
+		it('from a list with many nodes', () => {
+			let n1 = topic.push(1)
+			let n2 = topic.push(2)
+			let n3 = topic.push(3)
 
-			var nPop = topic.pop()
+			let nPop = topic.pop()
 
 			expect(topic.length).to.equal(2)
 			expect(nPop).to.equal(n3.data)
@@ -234,11 +234,11 @@ describe('Digital Chain - A linked list implementation, ', function () {
 		})
 	})
 
-	describe('shift', function () {
-		it('from a list with one node', function () {
-			var n1 = topic.push(1)
+	describe('shift', () => {
+		it('from a list with one node', () => {
+			let n1 = topic.push(1)
 
-			var node = topic.shift()
+			let node = topic.shift()
 
 			expect(topic.length).to.equal(0)
 			expect(node).to.equal(n1.data)
@@ -246,12 +246,12 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(topic.tail).to.be.undefined
 		})
 
-		it('from a list with many nodes', function () {
-			var n1 = topic.push(1)
-			var n2 = topic.push(2)
-			var n3 = topic.push(3)
+		it('from a list with many nodes', () => {
+			let n1 = topic.push(1)
+			let n2 = topic.push(2)
+			let n3 = topic.push(3)
 
-			var node = topic.shift()
+			let node = topic.shift()
 
 			expect(topic.length).to.equal(2)
 			expect(node).to.equal(n1.data)
@@ -267,27 +267,27 @@ describe('Digital Chain - A linked list implementation, ', function () {
 		})
 	})
 
-	describe('iteartion', function () {
-		it('foreach', function() {
+	describe('iteartion', () => {
+		it('foreach', () => {
 			topic.push(1)
 			topic.push(2)
 			topic.push(3)
 
-			var count = 0
-			topic.foreach(function (item) {
+			let count = 0
+			topic.foreach(item => {
 				expect(item.data).to.equal(++count)
 			})
 
 			expect(count).to.equal(3)
 		})
 
-		it('foreach - break in the middle', function () {
+		it('foreach - break in the middle', () => {
 			topic.push(1)
 			topic.push(2)
 			topic.push(3)
 
-			var count = 0
-			topic.foreach(function (item) {
+			let count = 0
+			topic.foreach(item => {
 				expect(item.data).to.equal(++count)
 				return true
 			})
@@ -295,98 +295,98 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(count).to.equal(1)
 		})
 
-		it('nodeIterator', function () {
-			var nodes = []
-			
+		it('nodeIterator', () => {
+			let nodes = []
+
 			nodes.push(topic.push(1))
 			nodes.push(topic.push(2))
 			nodes.push(topic.push(3))
 
 			expect(nodes.length).to.equal(3)
 
-			var nodeIterator = topic.nodeIterator()
-			
-			var current
-			var count = 0
-			
+			let nodeIterator = topic.nodeIterator()
+
+			let current
+			let count = 0
+
 			while (current = nodeIterator()) {
 				expect(current).to.equal(nodes[count++])
 			}
-			
+
 			expect(count).to.equal(nodes.length)
 		})
 
-		it('iterator', function () {
-			var data = ['a', 'b', 'c']
+		it('iterator', () => {
+			let data = ['a', 'b', 'c']
 
 			topic.pushAll(data)
-			
-			var iterator = topic.iterator()
-			
-			var current
-			var count = 0
-			
+
+			let iterator = topic.iterator()
+
+			let current
+			let count = 0
+
 			while (current = iterator()) {
 				expect(current).to.equal(data[count++])
 			}
-			
+
 			expect(count).to.equal(data.length)
 		})
 	})
-	
-	describe('find', function () {
-		it('the first node using strict equality', function () {
-			var na = topic.push('a')
-			var nb = topic.push('b')
-			var nc = topic.push('c')
 
-			var found = topic.findFirst('b')
+	describe('find', () => {
+		it('the first node using strict equality', () => {
+			let na = topic.push('a')
+			let nb = topic.push('b')
+			let nc = topic.push('c')
+
+			let found = topic.findFirst('b')
 
 			expect(found.data).to.equal('b')
 			expect(found).not.to.be.undefined
 			expect(found).to.equal(nb)
 		})
 
-		it('first return undefined if node is not found', function () {
-			var na = topic.push('a')
-			var nb = topic.push('b')
-			var nc = topic.push('c')
+		it('first return undefined if node is not found', () => {
+			let na = topic.push('a')
+			let nb = topic.push('b')
+			let nc = topic.push('c')
 
-			var found = topic.findFirst('d')
+			let found = topic.findFirst('d')
 
 			expect(found).to.be.undefined
 		})
 
-		it('all the nodes using strict equality', function () {
-			var na = topic.push('a')
-			var nb = topic.push('b')
-			var nc = topic.push('b')
-			
-			var found = topic.findAll('b')
+		it('all the nodes using strict equality', () => {
+			let na = topic.push('a')
+			let nb = topic.push('b')
+			let nc = topic.push('b')
+
+			let found = topic.findAll('b')
 
 			expect(found).to.have.length(2)
 			expect(found[0]).to.equal(nb)
 			expect(found[1]).to.equal(nc)
 		})
 
-		it('all returns a zero length array if nodes are not found', function () {
-			var na = topic.push('a')
-			var nb = topic.push('b')
-			var nc = topic.push('c')
+		it('all returns a zero length array if nodes are not found', () => {
+			let na = topic.push('a')
+			let nb = topic.push('b')
+			let nc = topic.push('c')
 
-			var found = topic.findAll('d')
+			let found = topic.findAll('d')
 
 			expect(found).to.have.length(0)
 		})
 
-		it('the first node by using custom predicate', function () { 
-			var na = topic.push('a')
-			var nb = topic.push('b')
-			var nc = topic.push('b')
-			var count = 0
+		it('the first node by using custom predicate', () => {
+			let na = topic.push('a')
+			let nb = topic.push('b')
+			let nc = topic.push('b')
+			let count = 0
 
-			var found = topic.findFirstBy(function (item) {
-				count ++
+			let found = topic.findFirstBy(item => {
+				count++
 				return item === 'b'
 			})
 
@@ -395,14 +395,14 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(found).to.equal(nb)
 		})
 
-		it('all the nodes by using custom predicate', function () { 
-			var na = topic.push('a')
-			var nb = topic.push('b')
-			var nc = topic.push('b')
-			var count = 0
+		it('all the nodes by using custom predicate', () => {
+			let na = topic.push('a')
+			let nb = topic.push('b')
+			let nc = topic.push('b')
+			let count = 0
 
-			var found = topic.findAllBy(function (item) {
-				count ++
+			let found = topic.findAllBy(item => {
+				count++
 				return item === 'b'
 			})
 
@@ -411,14 +411,14 @@ describe('Digital Chain - A linked list implementation, ', function () {
 			expect(found[0]).to.equal(nb)
 			expect(found[1]).to.equal(nc)
 		})
-	
-	})
-		
-	it.skip('bench', function () {
 
 	})
 
-	beforeEach(function () {
+	it.skip('bench', () => {
+
+	})
+
+	beforeEach(() => {
 		topic = new LinkedList()
 	})
 })
