@@ -13,7 +13,13 @@ class DataIterator {
 
 		this._current = current.next
 
-		return { done: false, value: current.data }
+		return {
+			done: false,
+			value: {
+				data: current.data,
+				node: current
+			}
+		}
 	}
 }
 
@@ -31,6 +37,12 @@ class LinkedList {
 		this.foreach = this.forEach
 	}
 
+	/**
+	 *    push an item to the tail of this list
+	 *    
+	 *    @param  {variant} item
+	 *    @return {Node}
+	 */
 	push(item) {
 		let node = new Node(item)
 
