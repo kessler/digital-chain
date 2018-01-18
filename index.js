@@ -1,3 +1,22 @@
+class DataIterator {
+	constructor(list) {
+		this._list = list
+		this._current = list.head
+	}
+
+	next() {
+		let current = this._current
+
+		if (!current) {
+			return { done: true }
+		}
+
+		this._current = current.next
+
+		return { done: false, value: current.data }
+	}
+}
+
 class Node {
 	constructor(data) {
 		this.data = data
@@ -86,6 +105,10 @@ class LinkedList {
 				return data
 			}
 		}
+	}
+
+	[Symbol.iterator]() {
+		return new DataIterator(this)
 	}
 
 	findFirst(data) {
