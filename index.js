@@ -15,10 +15,10 @@ class DataIterator {
 
 		return {
 			done: false,
-			value: {
-				data: current.data,
-				node: current
-			}
+			value: [
+				current.data,
+				current
+			]
 		}
 	}
 }
