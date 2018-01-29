@@ -100,20 +100,22 @@ class LinkedList {
 	}
 
 	nodeIterator() {
+		let next = this.head
 		return () => {
-			if (this.head) {
-				let t = this.head
-				this.head = this.head.next
+			if (next) {
+				let t = next
+				next = next.next
 				return t
 			}
 		}
 	}
 
 	iterator() {
+		let next = this.head
 		return () => {
-			if (this.head) {
-				let data = this.head.data
-				this.head = this.head.next
+			if (next) {
+				let data = next.data
+				next = next.next
 				return data
 			}
 		}

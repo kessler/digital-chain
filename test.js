@@ -331,6 +331,7 @@ describe('Digital Chain - A linked list implementation, ', () => {
 			}
 
 			expect(count).to.equal(data.length)
+			expect(topic.head.data).to.equal('a')
 		})
 
 		it('ES6 iterator', () => {
