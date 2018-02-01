@@ -1,25 +1,61 @@
-class DataIterator {
+/**
+ *    iterates over values and nodes
+ *    for (let [value, node] of list) {}
+ *    
+ */
+class EntryIterator {
 	constructor(list) {
 		this._list = list
-		this._current = list.head
+		this._current = undefined
+		this._done = list.head === undefined
 	}
 
 	next() {
-		let current = this._current
-
-		if (!current) {
-			return { done: true }
+		if (this._done) {
+			return this
 		}
 
-		this._current = current.next
-
-		return {
-			done: false,
-			value: [
-				current.data,
-				current
-			]
+		if (this._current) {
+			this._current = this._current.next
+		} else {
+			this._current = this._list.head
 		}
+
+		this._done = this._current === undefined
+
+		return this
+	}
+
+	get value() {
+		return [this._current.data, this._current]
+	}
+
+	get done() {
+		return this._done
+	}
+
+	[Symbol.iterator]() {
+		return this
+	}
+}
+
+class ValueIterator extends EntryIterator {
+	constructor(list) {
+		super(list)
+	}
+
+	get value() {
+		return this._current.data
+	}
+}
+
+class NodeIterator extends EntryIterator {
+	constructor(list) {
+		super(list)
+	}
+
+	get value() {
+		return this._current
 	}
 }
 
@@ -121,8 +157,16 @@ class LinkedList {
 		}
 	}
 
+	nodes() {
+		return new NodeIterator(this)
+	}
+
+	values() {
+		return new ValueIterator(this)
+	}
+
 	[Symbol.iterator]() {
-		return new DataIterator(this)
+		return new EntryIterator(this)
 	}
 
 	findFirst(data) {
