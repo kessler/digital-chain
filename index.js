@@ -36,14 +36,16 @@ class LinkedList {
 
 	/**
 	 *    push all the items at the tail of the list
-	 *    
-	 *    @param  {...[Variant]} an array or just arguments to be pushed to the list, the following are equivalent:
+	 *	the following are equivalent:
+	 *	
 	 *    ```js
 	 *    list.pushAll(1, 2, 3)
 	 *    list.pushAll([1, 2], 3)
 	 *    list.pushAll([1, 2, 3])
 	 *    ```
 	 *    to push an array as a single item use .push(arr)
+	 *    
+	 *    @param  {...[Variant]} args an array or just arguments to be pushed to the list
 	 *    
 	 *    @return {ListNode[]}
 	 *
@@ -105,14 +107,16 @@ class LinkedList {
 
 	/**
 	 *	insert all the items at the head of the list
-	 *    
-	 *    @param  {...[Variant]} an array or just arguments to be pushed to the list, the following are equivalent:
-	 *    ```js
+	 *	the following are all equivalent:
+	 *	
+	 *	```js
 	 *    list.unshiftAll(1, 2, 3)
 	 *    list.unshiftAll([1, 2], 3)
 	 *    list.unshiftAll([1, 2, 3])
 	 *    ```
 	 *    to push an array as a single item use .push(arr)
+	 *    
+	 *    @param  {...[Variant]} args an array or just arguments to be pushed to the list
 	 *    
 	 *    @return {ListNode[]}
 	 *
@@ -290,18 +294,21 @@ class LinkedList {
 	}
 
 	/**
-	 *    @param  {function(Node, Node)} [comparator] - override the default comparator with a custom one.
+	 *	sort the list
+	 *
+	 *    the default sorting comparator is:
 	 *    ```js
-	 *    // default comparator
-	 *    
-	 * 	function defaultComparator(a, b) {
-	 * 		if (b > a) return -1
+	 *	function defaultComparator(a, b) {
+	 *		if (b > a) return -1
 	 *		if (b < a) return 1
-	 *
+	 *		
 	 *		return 0
-	 * 	}
-	 *    ````
+	 *	}
+	 *    ```
+	 *    
+	 *    @param  {function(Node, Node)} [comparator] - override the default comparator with a custom one.
 	 *
+	 *    @public
 	 */
 	sort(comparator) {
 		if (typeof(comparator) !== 'function') {

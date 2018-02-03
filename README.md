@@ -31,13 +31,13 @@ A linked list implementation
 
 ### LinkedList
 
-[index.js:5-510](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L5-L510 "Source code on GitHub")
+[index.js:5-517](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L5-L517 "Source code on GitHub")
 
 a doubly linked list
 
 #### push
 
-[index.js:20-35](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L20-L35 "Source code on GitHub")
+[index.js:20-35](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L20-L35 "Source code on GitHub")
 
 push an item to the tail of this list
 
@@ -49,24 +49,28 @@ Returns **[ListNode](#listnode)** the node wrapping the item, nodes can be used 
 
 #### pushAll
 
-[index.js:52-65](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L52-L65 "Source code on GitHub")
+[index.js:54-67](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L54-L67 "Source code on GitHub")
 
 push all the items at the tail of the list
+the following are equivalent:
+
+```js
+list.pushAll(1, 2, 3)
+list.pushAll([1, 2], 3)
+list.pushAll([1, 2, 3])
+```
+
+   to push an array as a single item use .push(arr)
 
 **Parameters**
 
--   `args` **...any** 
--   `an` **...\[Variant]** array or just arguments to be pushed to the list, the following are equivalent:```js
-    list.pushAll(1, 2, 3)
-    list.pushAll([1, 2], 3)
-    list.pushAll([1, 2, 3])
-    ```   to push an array as a single item use .push(arr)
+-   `args` **...\[Variant]** an array or just arguments to be pushed to the list
 
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[ListNode](#listnode)>** 
 
 #### pop
 
-[index.js:75-79](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L75-L79 "Source code on GitHub")
+[index.js:77-81](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L77-L81 "Source code on GitHub")
 
 remove the tail of this list, if the list has more than 1 node in it, the previous node
    will become the new tail of the list
@@ -75,7 +79,7 @@ Returns **Variant** the data from the removed tail node or `undefined` if the li
 
 #### unshift
 
-[index.js:89-104](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L89-L104 "Source code on GitHub")
+[index.js:91-106](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L91-L106 "Source code on GitHub")
 
 insert an item at the head of this list
 
@@ -87,24 +91,28 @@ Returns **[ListNode](#listnode)**
 
 #### unshiftAll
 
-[index.js:121-133](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L121-L133 "Source code on GitHub")
+[index.js:125-137](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L125-L137 "Source code on GitHub")
 
 insert all the items at the head of the list
+the following are all equivalent:
+
+```js
+   list.unshiftAll(1, 2, 3)
+   list.unshiftAll([1, 2], 3)
+   list.unshiftAll([1, 2, 3])
+```
+
+   to push an array as a single item use .push(arr)
 
 **Parameters**
 
--   `args` **...any** 
--   `an` **...\[Variant]** array or just arguments to be pushed to the list, the following are equivalent:```js
-    list.unshiftAll(1, 2, 3)
-    list.unshiftAll([1, 2], 3)
-    list.unshiftAll([1, 2, 3])
-    ```   to push an array as a single item use .push(arr)
+-   `args` **...\[Variant]** an array or just arguments to be pushed to the list
 
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[ListNode](#listnode)>** 
 
 #### shift
 
-[index.js:141-145](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L141-L145 "Source code on GitHub")
+[index.js:145-149](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L145-L149 "Source code on GitHub")
 
 remove the head of this list, if the list has more than 1 node in it, the next node
    will become the new head of the list
@@ -113,7 +121,7 @@ Returns **Variant** the data from the removed head node or `undefined` if the li
 
 #### remove
 
-[index.js:153-199](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L153-L199 "Source code on GitHub")
+[index.js:157-203](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L157-L203 "Source code on GitHub")
 
 Remove a node from the list
 
@@ -125,7 +133,7 @@ Returns **Variant** the data contained in the removed node
 
 #### swap
 
-[index.js:212-290](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L212-L290 "Source code on GitHub")
+[index.js:216-294](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L216-L294 "Source code on GitHub")
 
 swap the positions of node A and node B inside the list
 
@@ -141,24 +149,28 @@ Returns **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 #### sort
 
-[index.js:306-318](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L306-L318 "Source code on GitHub")
+[index.js:313-325](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L313-L325 "Source code on GitHub")
+
+sort the list
+
+   the default sorting comparator is:
+
+```js
+function defaultComparator(a, b) {
+	if (b > a) return -1
+	if (b < a) return 1
+	
+	return 0
+}
+```
 
 **Parameters**
 
--   `comparator` **function ([Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling), [Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling))?** override the default comparator with a custom one.```js
-    // default comparator
-
-    	function defaultComparator(a, b) {
-    		if (b > a) return -1
-    	if (b < a) return 1
-
-    	return 0
-    	}
-    ```
+-   `comparator` **function ([Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling), [Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling))?** override the default comparator with a custom one.
 
 #### nodes
 
-[index.js:332-334](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L332-L334 "Source code on GitHub")
+[index.js:339-341](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L339-L341 "Source code on GitHub")
 
 An ES6 iterator of the nodes in this list, starting from the head
 
@@ -172,7 +184,7 @@ Returns **ListNodeIterator**
 
 #### values
 
-[index.js:348-350](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L348-L350 "Source code on GitHub")
+[index.js:355-357](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L355-L357 "Source code on GitHub")
 
 An ES6 iterator of the values in this list, starting from the head
 
@@ -186,7 +198,7 @@ Returns **ValueIterator**
 
 #### iterator
 
-[index.js:364-366](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L364-L366 "Source code on GitHub")
+[index.js:371-373](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L371-L373 "Source code on GitHub")
 
 An ES6 iterator of the value and nodes in this list, starting from the head
 
@@ -200,7 +212,7 @@ Returns **EntryIterator**
 
 #### reverseIterator
 
-[index.js:375-377](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L375-L377 "Source code on GitHub")
+[index.js:382-384](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L382-L384 "Source code on GitHub")
 
 An ES6 iterator of the value and nodes in this list, starting from the _tail_
 
@@ -208,7 +220,7 @@ Returns **EntryIterator**
 
 #### findFirst
 
-[index.js:388-398](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L388-L398 "Source code on GitHub")
+[index.js:395-405](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L395-L405 "Source code on GitHub")
 
 find the first occurrence of this piece of data in the list, equality test 
    is performed using `===`
@@ -221,7 +233,7 @@ Returns **[ListNode](#listnode)** the first node that contains this data
 
 #### findAll
 
-[index.js:410-423](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L410-L423 "Source code on GitHub")
+[index.js:417-430](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L417-L430 "Source code on GitHub")
 
 find all the occurrences of this piece of data in the list, equality test 
    is performed using `===`
@@ -235,7 +247,7 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 #### findFirstBy
 
-[index.js:434-444](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L434-L444 "Source code on GitHub")
+[index.js:441-451](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L441-L451 "Source code on GitHub")
 
 finds the first node in the list where the predicate function returns `true`
 
@@ -247,7 +259,7 @@ Returns **[ListNode](#listnode)** the first node that was found
 
 #### findAllBy
 
-[index.js:455-468](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L455-L468 "Source code on GitHub")
+[index.js:462-475](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L462-L475 "Source code on GitHub")
 
 finds the all the nodes in the list where the predicate function returns `true`
 
@@ -259,7 +271,7 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 #### nodeIterator
 
-[index.js:489-498](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L489-L498 "Source code on GitHub")
+[index.js:496-505](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L496-L505 "Source code on GitHub")
 
 A functional iterator over the nodes in the list, prefer the new ES6 iteration methods over this
 
@@ -267,7 +279,7 @@ Returns **\[type]**
 
 ### ListNode
 
-[index.js:584-589](https://github.com/kessler/digital-chain/blob/654e4793f85fbb9606496675972d94fe44bba46b/index.js#L584-L589 "Source code on GitHub")
+[index.js:591-596](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L591-L596 "Source code on GitHub")
 
 a node in the list
 
