@@ -52,9 +52,12 @@ describe('Digital Chain - A linked list implementation, ', () => {
 		})
 
 		it('an array of items', () => {
-			topic.pushAll([1, 2, 3])
+			let nodes = topic.pushAll([1, 2, 3])
 			topic.pushAll([4, 5, 6])
 
+			expect(nodes[0].data).to.equal(1)
+			expect(nodes[1].data).to.equal(2)
+			expect(nodes[2].data).to.equal(3)
 			expect(topic.length).to.equal(6)
 			expect(topic.head.data).to.equal(1)
 			expect(topic.head.next.data).to.equal(2)
@@ -164,7 +167,7 @@ describe('Digital Chain - A linked list implementation, ', () => {
 		it('can only be used with node objects', () => {
 			expect(() => {
 				topic.remove(1)
-			}).to.throw(TypeError)
+			}).to.throw(TypeError, 'remove() only accept instances of ListNode')
 		})
 
 		it('head where there are two nodes', () => {
@@ -499,13 +502,13 @@ describe('Digital Chain - A linked list implementation, ', () => {
 		it('will throw an error if node A is not a node', () => {
 			expect(() => {
 				topic.swap(1, 2)
-			}).to.throw('swap() can only be used with node objects, node A is not of type Node')
+			}).to.throw('swap() can only be used with node objects, node A is not of type ListNode')
 		})
 
 		it('will throw an error if node B is not a node', () => {
 			expect(() => {
 				topic.swap(topic.push(1), 2)
-			}).to.throw('swap() can only be used with node objects, node B is not of type Node')
+			}).to.throw('swap() can only be used with node objects, node B is not of type ListNode')
 		})
 
 		it('will throw an error if node A is currently a member of the list', () => {
