@@ -12,6 +12,7 @@ class EntryIterator {
 
 	next() {
 		if (this._done) {
+			console.log(5)
 			return this
 		}
 
@@ -59,9 +60,11 @@ class NodeIterator extends EntryIterator {
 	}
 }
 
+const _parent = Symbol('_parent')
 class Node {
-	constructor(data) {
+	constructor(data, parent) {
 		this.data = data
+		this[_parent] = parent
 	}
 }
 
@@ -70,7 +73,6 @@ class LinkedList {
 		this.head = undefined
 		this.tail = undefined
 		this.length = 0
-		this.foreach = this.forEach
 	}
 
 	/**
@@ -80,7 +82,7 @@ class LinkedList {
 	 *    @return {Node}
 	 */
 	push(item) {
-		let node = new Node(item)
+		let node = new Node(item, this)
 
 		if (this.length > 0) {
 			this.tail.next = node
@@ -96,14 +98,19 @@ class LinkedList {
 		return node
 	}
 
-	pushAll(arr) {
-		for (let i = 0; i < arr.length; i++) {
-			this.push(arr[i])
+	pushAll(...args) {
+		for (let arg of args) {
+			if (Array.isArray(arg)) {
+				this.pushAll(...arg)
+				continue
+			}
+
+			this.push(arg)
 		}
 	}
 
 	unshift(item) {
-		let node = new Node(item)
+		let node = new Node(item, this)
 
 		if (this.length > 0) {
 			this.head.prev = node
@@ -119,9 +126,14 @@ class LinkedList {
 		return node
 	}
 
-	unshiftAll(arr) {
-		for (let i = 0; i < arr.length; i++) {
-			this.unshift(arr[i])
+	unshiftAll(...args) {
+		for (let arg of args) {
+			if (Array.isArray(arg)) {
+				this.unshiftAll(...arg)
+				continue
+			}
+
+			this.unshift(arg)
 		}
 	}
 
@@ -133,6 +145,10 @@ class LinkedList {
 			if (stop) break
 			current = next
 		}
+	}
+
+	foreach(fn) {
+		return this.forEach(fn)
 	}
 
 	nodeIterator() {
@@ -229,6 +245,10 @@ class LinkedList {
 			throw new TypeError('remove() can only be used with node objects return from various methods of the list')
 		}
 
+		if (node[_parent] !== this) {
+			return
+		}
+
 		if (this.length === 0) {
 			return
 		}
@@ -278,6 +298,90 @@ class LinkedList {
 			return this.remove(this.tail)
 		}
 	}
+
+	swap(nodeA, nodeB) {
+
+		if (!(nodeA instanceof Node)) {
+			throw new TypeError('swap() can only be used with node objects, node A is not of type Node')
+		}
+
+		if (!(nodeB instanceof Node)) {
+			throw new TypeError('swap() can only be used with node objects, node B is not of type Node')
+		}
+
+		if (nodeA[_parent] !== this) {
+			throw new Error('node A is not in this list')
+		}
+
+		if (nodeB[_parent] !== this) {
+			throw new Error('node B is not in this list')
+		}
+
+		if (nodeA === nodeB) {
+			return
+		}
+
+		if (this.length === 0) {
+			return
+		}
+
+		if (nodeA === this.head) {
+			this.head = nodeB
+		} else if (nodeB === this.head) {
+			this.head = nodeA
+		}
+
+		if (nodeA === this.tail) {
+			this.tail = nodeB
+		} else if (nodeB === this.tail) {
+			this.tail = nodeA
+		}
+
+		let currentNodeANext = nodeA.next
+		let currentNodeAPrev = nodeA.prev
+		let currentNodeBNext = nodeB.next
+		let currentNodeBPrev = nodeB.prev
+
+		if (nodeA.next === nodeB) {
+			currentNodeBNext = nodeB.next
+			currentNodeBPrev = nodeB
+			currentNodeANext = nodeA
+			currentNodeAPrev = nodeA.prev
+		} else if (nodeA.prev === nodeB) {
+			currentNodeBNext = nodeB
+			currentNodeBPrev = nodeB.prev
+			currentNodeANext = nodeA.next
+			currentNodeAPrev = nodeA
+		}
+
+		nodeA.next = currentNodeBNext
+		nodeA.prev = currentNodeBPrev
+		nodeB.next = currentNodeANext
+		nodeB.prev = currentNodeAPrev
+
+		if (currentNodeAPrev) {
+			currentNodeAPrev.next = nodeB
+		}
+
+		if (currentNodeANext) {
+			currentNodeANext.prev = nodeB
+		}
+
+		if (currentNodeBPrev) {		
+			currentNodeBPrev.next = nodeA
+		}
+
+		if (currentNodeBNext) {
+			currentNodeBNext.prev = nodeA
+		}
+	}
+}
+
+function defaultComparator(a, b) {
+	if (b > a) return -1
+	if (b < a) return 1
+
+	return 0
 }
 
 module.exports = LinkedList

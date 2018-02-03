@@ -63,6 +63,18 @@ describe('Digital Chain - A linked list implementation, ', () => {
 			expect(topic.head.next.next.next.next.data).to.equal(5)
 			expect(topic.tail.data).to.equal(6)
 		})
+
+		it('spread arguments', () => {
+			topic.pushAll([1, 2, 3], 4, 5, 6)
+
+			expect(topic.length).to.equal(6)
+			expect(topic.head.data).to.equal(1)
+			expect(topic.head.next.data).to.equal(2)
+			expect(topic.head.next.next.data).to.equal(3)
+			expect(topic.head.next.next.next.data).to.equal(4)
+			expect(topic.head.next.next.next.next.data).to.equal(5)
+			expect(topic.tail.data).to.equal(6)
+		})
 	})
 
 	// TODO: want to have the same methods like javascript array
@@ -116,6 +128,18 @@ describe('Digital Chain - A linked list implementation, ', () => {
 		it('an array of items', () => {
 			topic.unshiftAll([1, 2, 3])
 			topic.unshiftAll([4, 5, 6])
+
+			expect(topic.length).to.equal(6)
+			expect(topic.head.data).to.equal(6)
+			expect(topic.head.next.data).to.equal(5)
+			expect(topic.head.next.next.data).to.equal(4)
+			expect(topic.head.next.next.next.data).to.equal(3)
+			expect(topic.head.next.next.next.next.data).to.equal(2)
+			expect(topic.tail.data).to.equal(1)
+		})
+
+		it('spread arguments', () => {
+			topic.unshiftAll([1, 2, 3], 4, 5, 6)
 
 			expect(topic.length).to.equal(6)
 			expect(topic.head.data).to.equal(6)
@@ -198,6 +222,15 @@ describe('Digital Chain - A linked list implementation, ', () => {
 			expect(topic.tail).to.be.undefined
 		})
 
+		it('will not remove nodes that are not part of the list', () => {
+			let list = new LinkedList()
+			let ln1 = list.push(1)
+			let tn1 = topic.push(1)
+			topic.remove(ln1)
+			expect(Array.from(topic)).to.deep.equal([
+				[1, tn1]
+			])
+		})
 	})
 
 
@@ -335,41 +368,33 @@ describe('Digital Chain - A linked list implementation, ', () => {
 		})
 
 		it('ES6 iterator', () => {
-			let nodes = []
-			nodes.push(topic.push(1))
-			nodes.push(topic.push(2))
-			nodes.push(topic.push(3))
-			nodes.push(topic.push(4))
+			let expected = []
+			expected.push([1, topic.push(1)])
+			expected.push([2, topic.push(2)])
+			expected.push([3, topic.push(3)])
+			expected.push([4, topic.push(4)])
 
-			let count = 0
-			for (let [number, node] of topic) {
-				expect(node).to.equal(nodes[count])
-				expect(number).to.equal(++count)
-			}
+			let actual = Array.from(topic)
+			expect(actual).to.deep.equal(expected)
 		})
 
 		it('ES6 node iterator', () => {
-			let nodes = []
+			let expected = []
 
-			nodes.push(topic.push(1))
-			nodes.push(topic.push(2))
-			nodes.push(topic.push(3))
-			nodes.push(topic.push(4))
+			expected.push(topic.push(1))
+			expected.push(topic.push(2))
+			expected.push(topic.push(3))
+			expected.push(topic.push(4))
 
-			let count = 0
-			for (let node of topic.nodes()) {
-				expect(node).to.equal(nodes[count++])
-			}
+			let actual = Array.from(topic.nodes())
+			expect(actual).to.deep.equal(expected)
 		})
 
 		it('ES6 value iterator', () => {
-			
-			topic.pushAll([1, 2, 3, 4])
-			
-			let count = 0
-			for (let number of topic.values()) {
-				expect(number).to.equal(++count)
-			}
+			let expected = [1, 2, 3, 4]
+			topic.pushAll(expected)
+			let actual = Array.from(topic.values())
+			expect(actual).to.deep.equal(expected)
 		})
 
 		it('ES6 iterator on an empty list', () => {
@@ -454,7 +479,244 @@ describe('Digital Chain - A linked list implementation, ', () => {
 			expect(found[0]).to.equal(nb)
 			expect(found[1]).to.equal(nc)
 		})
+	})
 
+	describe.only('swap', () => {
+		let swapTest
+
+		it('will throw an error if node A is not a node', () => {
+			expect(() => {
+				topic.swap(1, 2)
+			}).to.throw('swap() can only be used with node objects, node A is not of type Node')
+		})
+
+		it('will throw an error if node B is not a node', () => {
+			expect(() => {
+				topic.swap(topic.push(1), 2)
+			}).to.throw('swap() can only be used with node objects, node B is not of type Node')
+		})
+
+		it('will throw an error if node A is currently a member of the list', () => {
+			let anotherList = new LinkedList()
+			expect(() => {
+				topic.swap(anotherList.push(1), topic.push(2))
+			}).to.throw('node A is not in this list')
+		})
+
+		it('will throw an error if node B is currently a member of the list', () => {
+			let anotherList = new LinkedList()
+			expect(() => {
+				topic.swap(topic.push(2), anotherList.push(1))
+			}).to.throw('node B is not in this list')
+		})
+
+		it('swap the same node has no effect', () => {
+			swapTest.n1 = topic.push(2)
+			swapTest.A = topic.push(3)
+			swapTest.n3 = topic.push(4)
+
+			topic.swap(swapTest.A, swapTest.A)
+
+			swapTest.verify({
+				n1: { v: 2, p: undefined, n: 3 },
+				A: { v: 3, p: 2, n: 4 },
+				n3: { v: 4, p: 3, n: undefined }
+			})
+
+			swapTest.verifyValues([2, 3, 4])
+		})
+
+		describe('two nonadjacent nodes in the list', () => {
+			it('swap(A, B)', () => {
+				topic.swap(swapTest.A, swapTest.B)
+				verify()
+			})
+
+			it('swap(B, A)', () => {
+				topic.swap(swapTest.B, swapTest.A)
+				verify()
+			})
+
+			beforeEach(() => {
+				swapTest.n1 = topic.push(2)
+				swapTest.A = topic.push(4)
+				swapTest.n3 = topic.push(3)
+				swapTest.B = topic.push(5)
+				swapTest.n5 = topic.push(7)
+			})
+			
+			function verify() {
+				swapTest.verify({
+					n1: { v: 2, p: undefined, n: 5 },
+					B: { v: 5, p: 2, n: 3 },
+					n3: { v: 3, p: 5, n: 4 },
+					A: { v: 4, p: 3, n: 7 },
+					n5: { v: 7, p: 4, n: undefined }
+				})
+
+				swapTest.verifyValues([2, 5, 3, 4, 7])
+			}
+		})
+
+		describe('two adjacent nodes in the list', () => {
+			it('swap(A, B)', () => {
+				topic.swap(swapTest.A, swapTest.B)
+				verify()
+			})
+
+			it('swap(B, A)', () => {
+				topic.swap(swapTest.B, swapTest.A)
+				verify()
+			})
+
+			beforeEach(() => {
+				swapTest.n1 = topic.push(2)
+				swapTest.n2 = topic.push(3)
+				swapTest.A = topic.push(5)
+				swapTest.B = topic.push(4)
+				swapTest.n5 = topic.push(7)
+			})
+
+			function verify() {
+				swapTest.verify({
+					n1: { v: 2, p: undefined, n: 3 },
+					n2: { v: 3, p: 2, n: 4 },
+					B: { v: 4, p: 3, n: 5 },
+					A: { v: 5, p: 4, n: 7 },
+					n5: { v: 7, p: 5, n: undefined }
+				})
+
+				swapTest.verifyValues([2, 3, 4, 5, 7])
+			}
+		})
+
+		describe('two adjacent nodes in the list where A is the head', () => {
+			it('swap(A, B)', () => {
+				topic.swap(swapTest.A, swapTest.B)
+				verify()
+			})
+
+			it('swap(B, A)', () => {
+				topic.swap(swapTest.B, swapTest.A)
+				verify()
+			})
+
+			beforeEach(() => {
+				swapTest.A = topic.push(2)
+				swapTest.B = topic.push(4)
+				swapTest.n3 = topic.push(3)
+				swapTest.n4 = topic.push(5)
+				swapTest.n5 = topic.push(7)
+			})
+
+			function verify() {
+				swapTest.verify({
+					B: { v: 4, p: undefined, n: 2 },
+					A: { v: 2, p: 4, n: 3 },
+					n3: { v: 3, p: 2, n: 5 },
+					n4: { v: 5, p: 3, n: 7 },
+					n5: { v: 7, p: 5, n: undefined }
+				})
+
+				swapTest.verifyValues([4, 2, 3, 5, 7])
+				expect(topic.head).to.equal(swapTest.B)
+			}
+		})
+
+		describe('two adjacent nodes in the list where B is the tail', () => {
+			it('swap(A, B)', () => {
+				topic.swap(swapTest.A, swapTest.B)
+				verify()
+			})
+
+			it('swap(B, A)', () => {
+				topic.swap(swapTest.B, swapTest.A)
+				verify()
+			})
+
+			beforeEach(() => {
+				swapTest.n1 = topic.push(2)
+				swapTest.n2 = topic.push(4)
+				swapTest.n3 = topic.push(3)
+				swapTest.A = topic.push(5)
+				swapTest.B = topic.push(7)
+			})
+
+			function verify() {
+				swapTest.verify({
+					n1: { v: 2, p: undefined, n: 4 },
+					n2: { v: 4, p: 2, n: 3 },
+					n3: { v: 3, p: 4, n: 7 },
+					B: { v: 7, p: 3, n: 5 },
+					A: { v: 5, p: 7, n: undefined }
+				})
+
+				swapTest.verifyValues([2, 4, 3, 7, 5])
+				expect(topic.tail).to.equal(swapTest.A)
+			}
+		})
+
+		describe('tail and head', () => {
+			it('swap(A, B)', () => {
+				topic.swap(swapTest.A, swapTest.B)
+				verify()
+			})
+
+			it('swap(B, A)', () => {
+				topic.swap(swapTest.B, swapTest.A)
+				verify()
+			})
+
+			beforeEach(() => {
+				swapTest.A = topic.push(2)
+				swapTest.n2 = topic.push(4)
+				swapTest.n3 = topic.push(3)
+				swapTest.n4 = topic.push(5)
+				swapTest.B = topic.push(7)
+			})
+
+			function verify() {
+				swapTest.verify({
+					B: { v: 7, p: undefined, n: 4 },
+					n2: { v: 4, p: 7, n: 3 },
+					n3: { v: 3, p: 4, n: 5 },
+					n4: { v: 5, p: 3, n: 2 },
+					A: { v: 2, p: 5, n: undefined }
+				})
+
+				swapTest.verifyValues([7, 4, 3, 5, 2])
+			}
+		})
+
+		describe('tail and head - length === 2', () => {
+			it('swap(A, B)', () => {
+				topic.swap(swapTest.A, swapTest.B)
+				verify()
+			})
+
+			it('swap(B, A)', () => {
+				topic.swap(swapTest.B, swapTest.A)
+				verify()
+			})
+
+			beforeEach(() => {
+				swapTest.A = topic.push(2)
+				swapTest.B = topic.push(7)
+			})
+
+			function verify() {
+				swapTest.verify({
+					B: { v: 7, p: undefined, n: 2 },
+					A: { v: 2, p: 7, n: undefined }
+				})
+
+				swapTest.verifyValues([7, 2])
+			}
+		})
+
+		beforeEach(() => {
+			swapTest = new SwapTest(topic)
+		})
 	})
 
 	it.skip('bench', () => {
@@ -464,4 +726,48 @@ describe('Digital Chain - A linked list implementation, ', () => {
 	beforeEach(() => {
 		topic = new LinkedList()
 	})
+
+	class SwapTest {
+		constructor(topic) {
+			this.n1 = undefined
+			this.n2 = undefined
+			this.n3 = undefined
+			this.n4 = undefined
+			this.n5 = undefined
+			this.A = undefined
+			this.B = undefined
+			this.topic = topic
+		}
+
+		verify({ n1, n2, n3, n4, n5, A, B }) {
+			this._verify(this.n1, n1)
+			this._verify(this.n2, n2)
+			this._verify(this.n3, n3)
+			this._verify(this.n4, n4)
+			this._verify(this.n5, n5)
+			this._verify(this.A, A)
+			this._verify(this.B, B)
+		}
+
+		verifyValues(values) {
+			expect(Array.from(this.topic.values())).to.deep.equal(values)
+		}
+
+		_verify(node, expected) {
+			if (expected) {
+				expect(node.data).to.equal(expected.v)
+				if (node.prev) {
+					expect(node.prev.data).to.equal(expected.p)
+				} else {
+					expect(node.prev).to.equal(expected.p)
+				}
+
+				if (node.next) {
+					expect(node.next.data).to.equal(expected.n)
+				} else {
+					expect(node.next).to.equal(expected.n)
+				}
+			}
+		}
+	}
 })
