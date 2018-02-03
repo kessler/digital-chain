@@ -1,25 +1,35 @@
+const FROM_HEAD = 1
+const FROM_TAIL = 2
+
 /**
  *    iterates over values and nodes
  *    for (let [value, node] of list) {}
  *    
  */
 class EntryIterator {
-	constructor(list) {
+	constructor(list, direction) {
+		this._direction = direction || FROM_HEAD
+		this._start = this._direction === FROM_HEAD ? list.head : list.tail
+
 		this._list = list
 		this._current = undefined
-		this._done = list.head === undefined
+		this._done = this._start === undefined
 	}
 
 	next() {
 		if (this._done) {
-			console.log(5)
 			return this
 		}
 
 		if (this._current) {
-			this._current = this._current.next
+			// TODO pretty ugly, replace with polymorphism?
+			if (this._direction === FROM_HEAD) {
+				this._current = this._current.next
+			} else {
+				this._current = this._current.prev
+			}
 		} else {
-			this._current = this._list.head
+			this._current = this._start
 		}
 
 		this._done = this._current === undefined
@@ -183,6 +193,10 @@ class LinkedList {
 
 	[Symbol.iterator]() {
 		return new EntryIterator(this)
+	}
+
+	reverseIterator() {
+		return new EntryIterator(this, FROM_TAIL)
 	}
 
 	findFirst(data) {
@@ -373,6 +387,20 @@ class LinkedList {
 
 		if (currentNodeBNext) {
 			currentNodeBNext.prev = nodeA
+		}
+	}
+
+	sort(comparator) {
+		if (typeof(comparator) !== 'function') {
+			comparator = defaultComparator
+		}
+
+		for (let [currentData, currentNode] of this) {
+			let node = currentNode
+			// previous one is bigger than current
+			while (node.prev && comparator(node.prev.data, currentData) > 0) {
+				this.swap(node.prev, node)
+			}
 		}
 	}
 }

@@ -400,6 +400,18 @@ describe('Digital Chain - A linked list implementation, ', () => {
 		it('ES6 iterator on an empty list', () => {
 			expect(Array.from(topic)).to.deep.equal([])
 		})
+
+		it('ES6 reverse iterator', () => {
+			let expected = []
+			expected.push([1, topic.push(1)])
+			expected.push([2, topic.push(2)])
+			expected.push([3, topic.push(3)])
+			expected.push([4, topic.push(4)])
+
+			let actual = Array.from(topic.reverseIterator())
+
+			expect(actual).to.deep.equal(expected.reverse())
+		})
 	})
 
 	describe('find', () => {
@@ -481,7 +493,7 @@ describe('Digital Chain - A linked list implementation, ', () => {
 		})
 	})
 
-	describe.only('swap', () => {
+	describe('swap', () => {
 		let swapTest
 
 		it('will throw an error if node A is not a node', () => {
@@ -544,7 +556,7 @@ describe('Digital Chain - A linked list implementation, ', () => {
 				swapTest.B = topic.push(5)
 				swapTest.n5 = topic.push(7)
 			})
-			
+
 			function verify() {
 				swapTest.verify({
 					n1: { v: 2, p: undefined, n: 5 },
@@ -716,6 +728,41 @@ describe('Digital Chain - A linked list implementation, ', () => {
 
 		beforeEach(() => {
 			swapTest = new SwapTest(topic)
+		})
+	})
+
+	describe('sort', () => {
+		it('defaultComparator - numbers', () => {
+			topic.pushAll([4, 2, 3, 1])
+			topic.sort()
+
+			let expected = [1, 2, 3, 4]
+			let actual = Array.from(topic.values())
+			expect(actual).to.deep.equal(expected)
+		})
+
+		it('defaultComparator - letters', () => {
+			topic.pushAll(['b', 'z', 'c', 'a'])
+			topic.sort()
+
+			let expected = ['a', 'b', 'c', 'z']
+			let actual = Array.from(topic.values())
+			expect(actual).to.deep.equal(expected)
+		})
+
+		it('custom comparator', () => {
+			topic.pushAll([{ v: 9 }, { v: 1 }, { v: 4 }, { v: 'z' }, { v: 'a' }])
+			topic.sort((a, b) => {
+				if (b.v > a.v) return -1
+				if (b.v < a.v) return 1
+
+				return 0
+			})
+
+			let actual = Array.from(topic.values())
+			let expected = [{ v: 1 }, { v: 4 }, { v: 9 }, { v: 'a' }, { v: 'z' }]
+
+			expect(actual).to.deep.equal(expected)
 		})
 	})
 
