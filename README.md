@@ -8,48 +8,59 @@ A linked list implementation
 
 #### Table of Contents
 
--   [LinkedList](#linkedlist)
-    -   [push](#push)
-    -   [pushAll](#pushall)
-    -   [pop](#pop)
-    -   [unshift](#unshift)
-    -   [unshiftAll](#unshiftall)
-    -   [shift](#shift)
-    -   [remove](#remove)
-    -   [swap](#swap)
-    -   [sort](#sort)
-    -   [nodes](#nodes)
-    -   [values](#values)
-    -   [iterator](#iterator)
-    -   [reverseIterator](#reverseiterator)
-    -   [findFirst](#findfirst)
-    -   [findAll](#findall)
-    -   [findFirstBy](#findfirstby)
-    -   [findAllBy](#findallby)
-    -   [nodeIterator](#nodeiterator)
--   [ListNode](#listnode)
+*   [LinkedList](#linkedlist)
+    *   [length](#length)
+    *   [push](#push)
+        *   [Parameters](#parameters)
+    *   [pushAll](#pushall)
+        *   [Parameters](#parameters-1)
+    *   [pop](#pop)
+    *   [unshift](#unshift)
+        *   [Parameters](#parameters-2)
+    *   [unshiftAll](#unshiftall)
+        *   [Parameters](#parameters-3)
+    *   [shift](#shift)
+    *   [remove](#remove)
+        *   [Parameters](#parameters-4)
+    *   [swap](#swap)
+        *   [Parameters](#parameters-5)
+    *   [sort](#sort)
+        *   [Parameters](#parameters-6)
+    *   [nodes](#nodes)
+    *   [values](#values)
+    *   [iterator](#iterator)
+    *   [reverseIterator](#reverseiterator)
+    *   [findFirst](#findfirst)
+        *   [Parameters](#parameters-7)
+    *   [findAll](#findall)
+        *   [Parameters](#parameters-8)
+    *   [findFirstBy](#findfirstby)
+        *   [Parameters](#parameters-9)
+    *   [findAllBy](#findallby)
+        *   [Parameters](#parameters-10)
+    *   [nodeIterator](#nodeiterator)
+*   [ListNode](#listnode)
+    *   [Parameters](#parameters-11)
 
 ### LinkedList
 
-[index.js:5-517](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L5-L517 "Source code on GitHub")
-
 a doubly linked list
+
+#### length
+
+returns the current length of the list
 
 #### push
 
-[index.js:20-35](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L20-L35 "Source code on GitHub")
-
 push an item to the tail of this list
 
-**Parameters**
+##### Parameters
 
--   `item` **Variant** any kind of item can be pushed
+*   `item` **Variant** any kind of item can be pushed
 
 Returns **[ListNode](#listnode)** the node wrapping the item, nodes can be used in methods such as remove()
 
 #### pushAll
-
-[index.js:54-67](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L54-L67 "Source code on GitHub")
 
 push all the items at the tail of the list
 the following are equivalent:
@@ -60,38 +71,32 @@ list.pushAll([1, 2], 3)
 list.pushAll([1, 2, 3])
 ```
 
-   to push an array as a single item use .push(arr)
+to push an array as a single item use .push(arr)
 
-**Parameters**
+##### Parameters
 
--   `args` **...\[Variant]** an array or just arguments to be pushed to the list
+*   `args` **...\[Variant]** an array or just arguments to be pushed to the list
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[ListNode](#listnode)>** 
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[ListNode](#listnode)>** 
 
 #### pop
 
-[index.js:77-81](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L77-L81 "Source code on GitHub")
-
 remove the tail of this list, if the list has more than 1 node in it, the previous node
-   will become the new tail of the list
+will become the new tail of the list
 
 Returns **Variant** the data from the removed tail node or `undefined` if the list was empty
 
 #### unshift
 
-[index.js:91-106](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L91-L106 "Source code on GitHub")
-
 insert an item at the head of this list
 
-**Parameters**
+##### Parameters
 
--   `item` **Variant** any kind of item can be inserted
+*   `item` **Variant** any kind of item can be inserted
 
 Returns **[ListNode](#listnode)** 
 
 #### unshiftAll
-
-[index.js:125-137](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L125-L137 "Source code on GitHub")
 
 insert all the items at the head of the list
 the following are all equivalent:
@@ -102,75 +107,65 @@ the following are all equivalent:
    list.unshiftAll([1, 2, 3])
 ```
 
-   to push an array as a single item use .push(arr)
+to push an array as a single item use .push(arr)
 
-**Parameters**
+##### Parameters
 
--   `args` **...\[Variant]** an array or just arguments to be pushed to the list
+*   `args` **...\[Variant]** an array or just arguments to be pushed to the list
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[ListNode](#listnode)>** 
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[ListNode](#listnode)>** 
 
 #### shift
 
-[index.js:145-149](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L145-L149 "Source code on GitHub")
-
 remove the head of this list, if the list has more than 1 node in it, the next node
-   will become the new head of the list
+will become the new head of the list
 
 Returns **Variant** the data from the removed head node or `undefined` if the list was empty
 
 #### remove
 
-[index.js:157-203](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L157-L203 "Source code on GitHub")
-
 Remove a node from the list
 
-**Parameters**
+##### Parameters
 
--   `node` **[ListNode](#listnode)** the node to remove
+*   `node` **[ListNode](#listnode)** the node to remove
 
 Returns **Variant** the data contained in the removed node
 
 #### swap
-
-[index.js:216-294](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L216-L294 "Source code on GitHub")
 
 swap the positions of node A and node B inside the list
 
 this method will throw an error if one or more of the arguments is not a `Node` or not a member
 of this list
 
-**Parameters**
+##### Parameters
 
--   `nodeA` **[ListNode](#listnode)** 
--   `nodeB` **[ListNode](#listnode)** 
+*   `nodeA` **[ListNode](#listnode)** 
+*   `nodeB` **[ListNode](#listnode)** 
 
 Returns **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** returns true if a swap did occur
 
 #### sort
 
-[index.js:313-325](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L313-L325 "Source code on GitHub")
-
 sort the list
 
-   the default sorting comparator is:
+the default sorting comparator is:
 
 ```js
 function defaultComparator(a, b) {
-	if (b > a) return -1
-	if (b < a) return 1
-	
-	return 0
+ if (b > a) return -1
+ if (b < a) return 1
+ 
+ return 0
 }
 ```
 
-**Parameters**
+##### Parameters
 
--   `comparator` **function ([Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling), [Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling))?** override the default comparator with a custom one.
+*   `comparator` **function ([Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling), [Node](https://developer.mozilla.org/docs/Web/API/Node/nextSibling))?** override the default comparator with a custom one.
 
 #### nodes
-
-[index.js:339-341](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L339-L341 "Source code on GitHub")
 
 An ES6 iterator of the nodes in this list, starting from the head
 
@@ -184,8 +179,6 @@ Returns **ListNodeIterator**
 
 #### values
 
-[index.js:355-357](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L355-L357 "Source code on GitHub")
-
 An ES6 iterator of the values in this list, starting from the head
 
 ```js
@@ -197,8 +190,6 @@ for (let value of list.values()) {
 Returns **ValueIterator** 
 
 #### iterator
-
-[index.js:371-373](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L371-L373 "Source code on GitHub")
 
 An ES6 iterator of the value and nodes in this list, starting from the head
 
@@ -212,66 +203,54 @@ Returns **EntryIterator**
 
 #### reverseIterator
 
-[index.js:382-384](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L382-L384 "Source code on GitHub")
-
-An ES6 iterator of the value and nodes in this list, starting from the _tail_
+An ES6 iterator of the value and nodes in this list, starting from the *tail*
 
 Returns **EntryIterator** 
 
 #### findFirst
 
-[index.js:395-405](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L395-L405 "Source code on GitHub")
+find the first occurrence of this piece of data in the list, equality test
+is performed using `===`
 
-find the first occurrence of this piece of data in the list, equality test 
-   is performed using `===`
+##### Parameters
 
-**Parameters**
-
--   `data` **Variant** data to find
+*   `data` **Variant** data to find
 
 Returns **[ListNode](#listnode)** the first node that contains this data
 
 #### findAll
 
-[index.js:417-430](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L417-L430 "Source code on GitHub")
+find all the occurrences of this piece of data in the list, equality test
+is performed using `===`
+this will traverse the entire list
 
-find all the occurrences of this piece of data in the list, equality test 
-   is performed using `===`
-   this will traverse the entire list
+##### Parameters
 
-**Parameters**
+*   `data` **Variant** data to find
 
--   `data` **Variant** data to find
-
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[ListNode](#listnode)>** an array of nodes that contain this data
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[ListNode](#listnode)>** an array of nodes that contain this data
 
 #### findFirstBy
 
-[index.js:441-451](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L441-L451 "Source code on GitHub")
-
 finds the first node in the list where the predicate function returns `true`
 
-**Parameters**
+##### Parameters
 
--   `predicate` **function (Variant)** a function that returns `true` for nodes that should be included in the search results
+*   `predicate` **function (Variant)** a function that returns `true` for nodes that should be included in the search results
 
 Returns **[ListNode](#listnode)** the first node that was found
 
 #### findAllBy
 
-[index.js:462-475](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L462-L475 "Source code on GitHub")
-
 finds the all the nodes in the list where the predicate function returns `true`
 
-**Parameters**
+##### Parameters
 
--   `predicate` **function (Variant)** a function that returns `true` for nodes that should be included in the search results
+*   `predicate` **function (Variant)** a function that returns `true` for nodes that should be included in the search results
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[ListNode](#listnode)>** an array of nodes that were found
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[ListNode](#listnode)>** an array of nodes that were found
 
 #### nodeIterator
-
-[index.js:496-505](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L496-L505 "Source code on GitHub")
 
 A functional iterator over the nodes in the list, prefer the new ES6 iteration methods over this
 
@@ -279,11 +258,13 @@ Returns **\[type]**
 
 ### ListNode
 
-[index.js:591-596](https://github.com/kessler/digital-chain/blob/4757bdb4e469c167656366c1f5a225787d324f87/index.js#L591-L596 "Source code on GitHub")
-
 a node in the list
 
-**Parameters**
+#### Parameters
 
--   `data`  
--   `parent`  
+*   `data`  
+*   `parent`  
+
+## docs
+
+    documentation readme index.js --section=API
