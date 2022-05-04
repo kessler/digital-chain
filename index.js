@@ -6,7 +6,17 @@ class LinkedList {
 	constructor() {
 		this.head = undefined
 		this.tail = undefined
-		this.length = 0
+		this._length = 0
+	}
+
+	/**
+	 *		returns the current length of the list
+	 * 
+	 * 		@public
+	 * 		@readonly
+	 */
+	get length() {
+		return this._length
 	}
 
 	/**
@@ -20,7 +30,7 @@ class LinkedList {
 	push(item) {
 		let node = new ListNode(item, this)
 
-		if (this.length > 0) {
+		if (this._length > 0) {
 			this.tail.next = node
 			node.prev = this.tail
 			this.tail = node
@@ -29,7 +39,7 @@ class LinkedList {
 			this.tail = node
 		}
 
-		this.length++;
+		this._length++;
 
 		return node
 	}
@@ -91,7 +101,7 @@ class LinkedList {
 	unshift(item) {
 		let node = new ListNode(item, this)
 
-		if (this.length > 0) {
+		if (this._length > 0) {
 			this.head.prev = node
 			node.next = this.head
 			this.head = node
@@ -100,7 +110,7 @@ class LinkedList {
 			this.tail = node
 		}
 
-		this.length++;
+		this._length++;
 
 		return node
 	}
@@ -164,7 +174,7 @@ class LinkedList {
 			return
 		}
 
-		if (this.length === 0) {
+		if (this._length === 0) {
 			return
 		}
 
@@ -182,18 +192,18 @@ class LinkedList {
 				this.tail = undefined // was the last, now its empty - so clean tail reference too
 			}
 
-			this.length--
+			this._length--
 
 		} else if (this.tail === node) {
 			this.tail = this.tail.prev
 			this.tail.next = undefined
-			this.length--
+			this._length--
 		} else if (node.prev && node.next) {
 			let prev = node.prev
 			let next = node.next
 			prev.next = next
 			next.prev = prev
-			this.length--
+			this._length--
 		}
 
 		node.prev = undefined
@@ -236,7 +246,7 @@ class LinkedList {
 		}
 
 		// this should never happen, because we're testing if node a and b are part of this list
-		if (this.length === 0) {
+		if (this._length === 0) {
 			throw new Error('list is empty, this shouldn\'t have happened, this is probably a bug')
 		}
 
