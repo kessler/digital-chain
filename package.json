@@ -1,10 +1,10 @@
 {
   "name": "digital-chain",
   "version": "3.8.0",
-  "description": "",
+  "description": "A linked list implementation",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "npx mocha"
   },
   "dependencies": {},
   "keywords": [
