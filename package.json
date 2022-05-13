@@ -1,6 +1,6 @@
 {
   "name": "digital-chain",
-  "version": "3.8.0",
+  "version": "3.8.1",
   "description": "A linked list implementation",
   "main": "index.js",
   "scripts": {
