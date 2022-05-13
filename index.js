@@ -28,7 +28,7 @@ class LinkedList {
 	 *    @public
 	 */
 	push(item) {
-		let node = new ListNode(item, this)
+		let node = this._newListNode(item, this)
 
 		if (this._length > 0) {
 			this.tail.next = node
@@ -99,7 +99,7 @@ class LinkedList {
 	 *    @public
 	 */
 	unshift(item) {
-		let node = new ListNode(item, this)
+		let node = this._newListNode(item, this)
 
 		if (this._length > 0) {
 			this.head.prev = node
@@ -304,7 +304,7 @@ class LinkedList {
 	}
 
 	/**
-	 *	sort the list
+	 *		sort the list
 	 *
 	 *    the default sorting comparator is:
 	 *    ```js
@@ -342,12 +342,12 @@ class LinkedList {
 	 *    	console.log(node.data, node.next)
 	 *    }
 	 *    ```
-	 *    @return {ListNodeIterator}
+	 *    @return {NodeIterator}
 	 *
 	 *    @public
 	 */
 	nodes() {
-		return new NodeIterator(this)
+		return this._newNodeIterator(this)
 	}
 
 	/**
@@ -363,7 +363,7 @@ class LinkedList {
 	 *    @public
 	 */
 	values() {
-		return new ValueIterator(this)
+		return this._newValueIterator(this)
 	}
 
 	/**
@@ -379,7 +379,7 @@ class LinkedList {
 	 *    @public
 	 */
 	[Symbol.iterator]() {
-		return new EntryIterator(this)
+		return this._newEntryIterator(this)
 	}
 
 	/**
@@ -390,7 +390,7 @@ class LinkedList {
 	 *    @public
 	 */
 	reverseIterator() {
-		return new EntryIterator(this, FROM_TAIL)
+		return this._newEntryIterator(this, FROM_TAIL)
 	}
 
 	/**
@@ -499,9 +499,8 @@ class LinkedList {
 	}
 
 	/**
-	 *	A functional iterator over the nodes in the list, prefer the new ES6 iteration methods over this
+	 *		A functional iterator over the nodes in the list, prefer the new ES6 iteration methods over this
 	 *    
-	 *    @return {[type]}
 	 */
 	nodeIterator() {
 		let next = this.head
@@ -514,6 +513,10 @@ class LinkedList {
 		}
 	}
 
+	/**
+	 *		A functional iterator over the values in the list, prefer the new ES6 iteration methods over this
+	 *    
+	 */
 	iterator() {
 		let next = this.head
 		return () => {
@@ -524,11 +527,43 @@ class LinkedList {
 			}
 		}
 	}
+
+	_newEntryIterator(list, direction) {
+		return new EntryIterator(list, direction)
+	}
+
+	_newValueIterator(list) {
+		return new ValueIterator(list)
+	}
+
+	_newNodeIterator(list) {
+		return new NodeIterator(list)
+	}
+
+	_newListNode(data, parent) {
+		return new ListNode(data, parent)
+	}
 }
 
 const FROM_HEAD = 1
 const FROM_TAIL = 2
 
+/**
+ *		Implements iteration over the list's entries (pairs of value + it's hosting node).
+ * 		This iterator is the only iterator that can change it's direction, the others are
+ * 		provided for convenience and only iterate from head to tail.
+ * 
+ *    ```js
+ *	const list = new LinkedList()
+ * 		
+ *	// iterate from head to tail
+ *	for (const [value, node] of list) { ... } 		
+ *
+ *	// iterate from tail to head
+ *	for (const [value, node] of list.reverseIterator()) { ... } 		
+ *    ```
+ * 
+ */
 class EntryIterator {
 	constructor(list, direction) {
 		this._direction = direction || FROM_HEAD
@@ -573,6 +608,18 @@ class EntryIterator {
 	}
 }
 
+/**
+ *		Implements iteration over the list's values.
+ * 
+ *    ```js
+ * 	const list = new LinkedList()
+ * 		
+ * 	// iterate from head to tail
+ * 	for (const value of list.values()) { ... } 		
+ *
+ *    ```
+ * 		
+ */
 class ValueIterator extends EntryIterator {
 	constructor(list) {
 		super(list)
@@ -583,6 +630,18 @@ class ValueIterator extends EntryIterator {
 	}
 }
 
+/**
+ *		Implements iteration over the list's nodes.
+ * 
+ *    ```js
+ * 	const list = new LinkedList()
+ * 		
+ * 	// iterate from head to tail
+ * 	for (const node of list.nodes()) { ... } 		
+ * 
+ *    ```
+ * 		
+ */
 class NodeIterator extends EntryIterator {
 	constructor(list) {
 		super(list)
@@ -611,5 +670,14 @@ function defaultComparator(a, b) {
 
 	return 0
 }
+
+LinkedList.EntryIterator = EntryIterator
+LinkedList.ValueIterator = ValueIterator
+LinkedList.NodeIterator = NodeIterator
+LinkedList.ListNode = ListNode
+LinkedList.direction = Object.freeze({
+	FROM_HEAD,
+	FROM_TAIL
+})
 
 module.exports = LinkedList

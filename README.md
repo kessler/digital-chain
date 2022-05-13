@@ -29,6 +29,7 @@ A linked list implementation
     *   [nodes](#nodes)
     *   [values](#values)
     *   [iterator](#iterator)
+    *   [iterator](#iterator-1)
     *   [reverseIterator](#reverseiterator)
     *   [findFirst](#findfirst)
         *   [Parameters](#parameters-7)
@@ -39,8 +40,14 @@ A linked list implementation
     *   [findAllBy](#findallby)
         *   [Parameters](#parameters-10)
     *   [nodeIterator](#nodeiterator)
-*   [ListNode](#listnode)
+*   [EntryIterator](#entryiterator)
     *   [Parameters](#parameters-11)
+*   [ValueIterator](#valueiterator)
+    *   [Parameters](#parameters-12)
+*   [NodeIterator](#nodeiterator-1)
+    *   [Parameters](#parameters-13)
+*   [ListNode](#listnode)
+    *   [Parameters](#parameters-14)
 
 ### LinkedList
 
@@ -175,7 +182,7 @@ for (let node of list.nodes()) {
 }
 ```
 
-Returns **ListNodeIterator** 
+Returns **[NodeIterator](#nodeiterator)** 
 
 #### values
 
@@ -187,7 +194,7 @@ for (let value of list.values()) {
 }
 ```
 
-Returns **ValueIterator** 
+Returns **[ValueIterator](#valueiterator)** 
 
 #### iterator
 
@@ -199,13 +206,17 @@ for (let [data, node] of list) {
 }
 ```
 
-Returns **EntryIterator** 
+Returns **[EntryIterator](#entryiterator)** 
+
+#### iterator
+
+A functional iterator over the values in the list, prefer the new ES6 iteration methods over this
 
 #### reverseIterator
 
 An ES6 iterator of the value and nodes in this list, starting from the *tail*
 
-Returns **EntryIterator** 
+Returns **[EntryIterator](#entryiterator)** 
 
 #### findFirst
 
@@ -254,7 +265,62 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 A functional iterator over the nodes in the list, prefer the new ES6 iteration methods over this
 
-Returns **\[type]** 
+### EntryIterator
+
+Implements iteration over the list's entries (pairs of value + it's hosting node).
+This iterator is the only iterator that can change it's direction, the others are
+provided for convenience and only iterate from head to tail.
+
+```js
+const list = new LinkedList()
+ 	
+// iterate from head to tail
+for (const [value, node] of list) { ... } 		
+
+// iterate from tail to head
+for (const [value, node] of list.reverseIterator()) { ... } 		
+```
+
+#### Parameters
+
+*   `list`  
+*   `direction`  
+
+### ValueIterator
+
+**Extends EntryIterator**
+
+Implements iteration over the list's values.
+
+```js
+ const list = new LinkedList()
+ 	
+ // iterate from head to tail
+ for (const value of list.values()) { ... } 		
+
+```
+
+#### Parameters
+
+*   `list`  
+
+### NodeIterator
+
+**Extends EntryIterator**
+
+Implements iteration over the list's nodes.
+
+```js
+ const list = new LinkedList()
+ 	
+ // iterate from head to tail
+ for (const node of list.nodes()) { ... } 		
+
+```
+
+#### Parameters
+
+*   `list`  
 
 ### ListNode
 
@@ -264,6 +330,52 @@ a node in the list
 
 *   `data`  
 *   `parent`  
+
+## Extension
+
+This implemenation uses several internal classes for iteration and for "hosting" values.
+
+### EntryIterator, ValueIterator, NodeIterator and ListNode
+
+These classes can be customized via inheritance:
+
+```js
+const LinkedList = require('digital-chain')
+
+class MyEntryIterator extends LinkedList.EntryIterator {}
+class MyValueIterator extends LinkedList.ValueIterator {}
+class MyNodeIterator extends LinkedList.NodeIterator {}
+class MyListNode extends LinkedList.ListNode {}
+
+```
+
+These new classes can then be incorporated into the linked list's by overriding their respective factory methods:
+
+```js
+class MyLinkedList extends LinkedList {
+    _newEntryIterator(list, direction) {
+        return new MyEntryIterator(list, direction) // direction constants are LinkedList.FROM_HEAD or LinkedList.FROM_TAIL
+    }
+
+    _newValueIterator(list) {
+        return new MyValueIterator(list)
+    }
+
+    _newNodeIterator(list) {
+        return new MyNodeIterator(list)
+    }
+
+    _newListNode(data, parent) {
+        return new MyListNode(data, parent)
+    }
+}
+
+// of course this can also be done to an existing instance:
+
+const customList = new LinkedList()
+customList._newEntryIterator = (list, direction) => new MyEntryIterator(list, direction)
+
+```
 
 ## docs
 

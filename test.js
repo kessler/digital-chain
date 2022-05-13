@@ -236,7 +236,6 @@ describe('Digital Chain - A linked list implementation, ', () => {
 		})
 	})
 
-
 	describe('pop', () => {
 		it('from a list with one node', () => {
 			let n1 = topic.push(1)
@@ -766,6 +765,45 @@ describe('Digital Chain - A linked list implementation, ', () => {
 			let expected = [{ v: 1 }, { v: 4 }, { v: 9 }, { v: 'a' }, { v: 'z' }]
 
 			expect(actual).to.deep.equal(expected)
+		})
+	})
+
+	describe('replace internal classes with inheritance', () => {
+		it('EntryIterator', () => {
+			class MyEntryIterator extends LinkedList.EntryIterator {}
+			topic._newEntryIterator = (list, direction) => new MyEntryIterator(list, direction)
+
+			const iterator = topic[Symbol.iterator]()
+
+			expect(iterator).to.be.instanceOf(MyEntryIterator)
+		})
+
+		it('ValueIterator', () => {
+			class MyValueIterator extends LinkedList.ValueIterator {}
+			topic._newValueIterator = (list) => new MyValueIterator(list)
+
+			const iterator = topic.values()
+
+			expect(iterator).to.be.instanceOf(MyValueIterator)
+		})
+
+		it('NodeIterator', () => {
+			class MyNodeIterator extends LinkedList.NodeIterator {}
+			topic._newNodeIterator = (list) => new MyNodeIterator(list)
+
+			const iterator = topic.nodes()
+
+			expect(iterator).to.be.instanceOf(MyNodeIterator)
+		})
+
+		it('ListNode', () => {
+			class MyListNode extends LinkedList.ListNode { }
+
+			topic._newListNode = (data, parent) => new MyListNode(data, parent)
+
+			const node = topic.push(1)
+
+			expect(node).to.be.instanceOf(MyListNode)
 		})
 	})
 
